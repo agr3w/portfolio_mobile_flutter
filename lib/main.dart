@@ -24,49 +24,50 @@ class MinhaPagina extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Scaffold funciona como o "esqueleto" ou "andaime" da tela [cite: 104]
+    // Pegando a altura total da tela, subtraindo a AppBar e a barra de status do celular
+    final screenHeight = MediaQuery.of(context).size.height -
+        kToolbarHeight -
+        MediaQuery.of(context).padding.top;
+
+    // Scaffold funciona como o "esqueleto" da tela
     return Scaffold(
-      backgroundColor: const Color(0xFFE5E5E5), // Fundo cinza claro
+      backgroundColor: const Color(0xFFE5E5E5),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFFFC107), // Amarelo em hexadecimal (Requisito 3)
+        // Uso obrigatório de Cores Hexadecimais no formato 0xFF
+        backgroundColor: const Color(0xFFFFC107), 
         elevation: 0,
         leading: const Icon(Icons.menu, color: Colors.black),
       ),
       
-      // O SingleChildScrollView permite rolar a tela para baixo ("Desce a pagina")
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 30),
-            
-            // Perfil 1: Paulo Sergio
+            // Tela 1: Paulo Sergio (Foto na direita)
             _buildProfileSection(
+              height: screenHeight,
               name: 'Paulo Sergio',
               role: 'Desenvolvedor Mobile',
-              // Imagem vinda de URL
+              // Foto real vinda de uma URL usando NetworkImage
               imageUrl: 'https://avatars.githubusercontent.com/u/77137834?v=4', 
+              isImageOnRight: true,
             ),
             
-            const SizedBox(height: 20),
-            
-            // Perfil 2: Weslley Kampa
+            // Tela 2: Weslley Kampa (Foto na esquerda)
             _buildProfileSection(
+              height: screenHeight,
               name: 'Weslley Kampa',
               role: 'Desenvolvedor Web',
               imageUrl: 'https://avatars.githubusercontent.com/u/91283681?v=4',
+              isImageOnRight: false,
             ),
             
-            const SizedBox(height: 40),
-            
-            // Seção Inferior: Um pouco sobre nós
-            _buildAboutSection(),
-            
-            const SizedBox(height: 40),
+            // Tela 3: Um pouco sobre nós
+            _buildAboutSection(height: screenHeight),
           ],
         ),
       ),
       
-      // Botão Flutuante (Requisito da Fase 2)
+      // Um FloatingActionButton com um ícone e cor que contrastem
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         backgroundColor: Colors.black,
@@ -75,48 +76,73 @@ class MinhaPagina extends StatelessWidget {
     );
   }
 
-  // Criamos uma função separada para não repetir código para os perfis
-  Widget _buildProfileSection({required String name, required String role, required String imageUrl}) {
+  // Componente reaproveitável que inverte o layout baseado na variável isImageOnRight
+  Widget _buildProfileSection({
+    required double height,
+    required String name,
+    required String role,
+    required String imageUrl,
+    required bool isImageOnRight,
+  }) {
     return SizedBox(
-      height: 220, 
+      height: height,
+      width: double.infinity,
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          // Textos e Ícones alinhados à esquerda
+          // Textos alinhados baseados na inversão do layout
           Positioned(
-            left: 24,
-            top: 40,
+            left: isImageOnRight ? 24 : null,
+            right: isImageOnRight ? null : 24,
+            top: height * 0.4, 
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: isImageOnRight ? CrossAxisAlignment.start : CrossAxisAlignment.end,
               children: [
                 Text(
                   name,
-                  style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold), 
                 ),
                 Text(
                   role,
-                  style: const TextStyle(fontSize: 14, color: Colors.black54),
+                  style: const TextStyle(fontSize: 18, color: Colors.black54),
                 ),
-                const SizedBox(height: 50),
-                const Row(
-                  children: [
-                    Icon(Icons.code, size: 35), // Substitua pelos ícones do Github/LinkedIn depois
-                    SizedBox(width: 15),
-                    Icon(Icons.business, size: 35),
-                  ],
-                )
               ],
             ),
           ),
           
-          // CircleAvatar empurrado para fora da tela na direita
           Positioned(
-            right: -80, 
-            top: 10,
+            right: isImageOnRight ? -80 : null,
+            left: isImageOnRight ? null : -80,
+            top: height * 0.25,
             child: CircleAvatar(
-              radius: 100,
-              backgroundColor: Colors.grey.shade300,
+              radius: 130,
+              backgroundColor: Colors.grey.shade400,
               backgroundImage: NetworkImage(imageUrl),
+            ),
+          ),
+          
+          // Ícones empilhados verticalmente com a animação de Subir
+          Positioned(
+            right: isImageOnRight ? 24 : null,
+            left: isImageOnRight ? null : 24,
+            bottom: 40,
+            child: TweenAnimationBuilder<Offset>(
+              tween: Tween<Offset>(begin: const Offset(0, 50), end: Offset.zero),
+              duration: const Duration(milliseconds: 1000),
+              curve: Curves.easeOut,
+              builder: (context, offset, child) {
+                return Transform.translate(
+                  offset: offset,
+                  child: child,
+                );
+              },
+              child: const Column(
+                children: [
+                  Icon(Icons.code, size: 40), // Ícones da Galeria Material Icons
+                  SizedBox(height: 16),
+                  Icon(Icons.business, size: 40), 
+                ],
+              ),
             ),
           ),
         ],
@@ -124,43 +150,49 @@ class MinhaPagina extends StatelessWidget {
     );
   }
 
-  Widget _buildAboutSection() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: Card(
-        // Desafio Extra: aumentar a sombra para dar mais profundidade [cite: 61]
-        // Usamos a propriedade elevation [cite: 63]
-        elevation: 8, 
-        color: const Color(0xFFF8F9FA),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+  Widget _buildAboutSection({required double height}) {
+    return SizedBox(
+      height: height,
+      width: double.infinity,
+      child: Center(
         child: Padding(
-          padding: const EdgeInsets.all(32.0),
-          child: Column(
-            children: [
-              const Text(
-                'Um pouco sobre nós',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Card(
+            // Uso do elevation para dar aspecto 3D
+            elevation: 12, 
+            color: const Color(0xFFF8F9FA),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            child: Padding(
+              padding: const EdgeInsets.all(32.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    'Um pouco sobre nós',
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 10),
+                  Container(height: 2, width: 80, color: Colors.black),
+                  const SizedBox(height: 20),
+                  const Text(
+                    'xxxxxxxxxxxxxxxxxxxx\nxxxxxxxxxxxxxxxxxxxx\nxxxxxxxxxxxxxxxxxxxx\nxxxxxxxxxxxxxxxxxxxx',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(height: 1.5, fontSize: 16),
+                  ),
+                  const SizedBox(height: 30),
+                  ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                    ),
+                    child: const Text('Contate-nos'),
+                  )
+                ],
               ),
-              const SizedBox(height: 10),
-              Container(height: 2, width: 80, color: Colors.black),
-              const SizedBox(height: 20),
-              const Text(
-                'xxxxxxxxxxxxxxxxxxxx\nxxxxxxxxxxxxxxxxxxxx\nxxxxxxxxxxxxxxxxxxxx\nxxxxxxxxxxxxxxxxxxxx',
-                textAlign: TextAlign.center,
-                style: TextStyle(height: 1.5),
-              ),
-              const SizedBox(height: 30),
-              ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                ),
-                child: const Text('Contate-nos'),
-              )
-            ],
+            ),
           ),
         ),
       ),
