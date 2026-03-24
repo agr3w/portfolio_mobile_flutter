@@ -1,3 +1,17 @@
+/* ============================================================================
+ * ATIVIDADE PRÁTICA - APLICATIVO DE PORTFÓLIO
+ * ============================================================================
+ * Autores: Weslley Kampa e Paulo Sergio
+ * Objetivo: Desenvolvimento de uma interface mobile utilizando Flutter.
+ * * Descrição: 
+ * Este projeto é um portfólio digital focado na aplicação de conceitos de 
+ * UI/UX nativos e híbridos. O aplicativo demonstra o uso de:
+ * - Renderização de UI multiplataforma (Scaffold, AppBar, Stack, Cards).
+ * - Consumo de imagens externas via URL da web (NetworkImage).
+ * - Animações de interface vinculadas ao Scroll (AnimatedAlign).
+ * para ícones oficiais e redirecionamento para links externos.
+ * ============================================================================ */
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
