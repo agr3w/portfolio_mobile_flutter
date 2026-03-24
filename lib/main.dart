@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 void main() {
   runApp(const MeuPortfolioApp());
@@ -136,14 +137,14 @@ class _PortfolioPageState extends State<PortfolioPage> {
                       heroTag: 'github_btn',
                       onPressed: () {},
                       backgroundColor: const Color(0xFF1A1A1A),
-                      child: const Icon(Icons.code, color: Colors.white),
+                      child: const FaIcon(FontAwesomeIcons.github, color: Colors.white),
                     ),
                     const SizedBox(height: 16),
                     FloatingActionButton(
                       heroTag: 'linkedin_btn',
                       onPressed: () {},
                       backgroundColor: const Color(0xFF0077B5),
-                      child: const Icon(Icons.business, color: Colors.white),
+                      child: const FaIcon(FontAwesomeIcons.linkedinIn, color: Colors.white),
                     ),
                   ],
                 ),
