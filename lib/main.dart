@@ -14,7 +14,7 @@ class MeuPortfolioApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         // [REQUISITO - Fase 1.3] Cores Hexadecimais Dinâmicas
-        primaryColor: const Color(0xFFFFC107), 
+        primaryColor: const Color(0xFFFFC107),
       ),
       home: const PortfolioPage(),
     );
@@ -30,7 +30,7 @@ class PortfolioPage extends StatefulWidget {
 
 class _PortfolioPageState extends State<PortfolioPage> {
   final ScrollController _scrollController = ScrollController();
-  bool _isPauloVisible = true; 
+  bool _isPauloVisible = true;
 
   @override
   void initState() {
@@ -42,7 +42,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
         // Lê a dimensão do scroll ao invés do MediaQuery para evitar o erro do framework
         final threshold = _scrollController.position.viewportDimension * 0.5;
         final isTop = _scrollController.offset < threshold;
-        
+
         if (_isPauloVisible != isTop) {
           setState(() {
             _isPauloVisible = isTop;
@@ -78,7 +78,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
         ),
         centerTitle: true,
       ),
-      
+
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -90,10 +90,12 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   height: screenHeight,
                   name: 'Paulo Sergio',
                   role: 'Desenvolvedor Mobile',
-                  bio: 'Focado em criar as melhores experiências nativas e híbridas. Transformando ideias complexas em aplicativos móveis de alta performance.',
+                  bio:
+                      'Focado em criar as melhores experiências nativas e híbridas. Transformando ideias complexas em aplicativos móveis de alta performance.',
                   skills: ['Flutter', 'Dart', 'Firebase', 'SQLite'],
                   // [REQUISITO - Fase 1.1] Imagens da Web via URL
-                  imageUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=500&auto=format&fit=crop',
+                  imageUrl:
+                      'https://avatars.githubusercontent.com/u/77137834?v=4',
                   isImageOnRight: true,
                 ),
 
@@ -102,9 +104,11 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   height: screenHeight,
                   name: 'Weslley Kampa',
                   role: 'Desenvolvedor Web',
-                  bio: 'Especialista na criação de interfaces modernas e performáticas com React.js e Vite. Desenvolvendo plataformas web robustas e inovadoras.',
+                  bio:
+                      'Especialista na criação de interfaces modernas e performáticas com React.js e Vite. Desenvolvendo plataformas web robustas e inovadoras.',
                   skills: ['React.js', 'Vite', 'JavaScript', 'UX/UI'],
-                  imageUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=500&auto=format&fit=crop',
+                  imageUrl:
+                      'https://avatars.githubusercontent.com/u/91283681?v=4',
                   isImageOnRight: false,
                 ),
 
@@ -185,35 +189,60 @@ class _PortfolioPageState extends State<PortfolioPage> {
             left: isImageOnRight ? 24 : null,
             right: isImageOnRight ? null : 24,
             top: height * 0.25,
-            width: MediaQuery.of(context).size.width * 0.65, 
+            width: MediaQuery.of(context).size.width * 0.65,
             child: Column(
-              crossAxisAlignment: isImageOnRight ? CrossAxisAlignment.start : CrossAxisAlignment.end,
+              crossAxisAlignment: isImageOnRight
+                  ? CrossAxisAlignment.start
+                  : CrossAxisAlignment.end,
               children: [
                 Text(
                   name,
-                  style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Color(0xFF1A1A1A)), 
+                  style: const TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF1A1A1A),
+                  ),
                 ),
                 Text(
                   role,
-                  style: const TextStyle(fontSize: 16, color: Colors.black54, fontWeight: FontWeight.w600),
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.black54,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
                 const SizedBox(height: 20),
                 Text(
                   bio,
                   textAlign: isImageOnRight ? TextAlign.left : TextAlign.right,
-                  style: const TextStyle(fontSize: 14, height: 1.5, color: Color(0xFF4A4A4A)),
+                  style: const TextStyle(
+                    fontSize: 14,
+                    height: 1.5,
+                    color: Color(0xFF4A4A4A),
+                  ),
                 ),
                 const SizedBox(height: 20),
                 Wrap(
                   spacing: 8,
                   runSpacing: 8,
-                  alignment: isImageOnRight ? WrapAlignment.start : WrapAlignment.end,
-                  children: skills.map((skill) => Chip(
-                    label: Text(skill, style: const TextStyle(fontSize: 12)),
-                    backgroundColor: const Color(0xFFFFC107).withValues(alpha: 0.2),
-                    side: BorderSide.none,
-                  )).toList(),
-                )
+                  alignment: isImageOnRight
+                      ? WrapAlignment.start
+                      : WrapAlignment.end,
+                  children: skills
+                      .map(
+                        (skill) => Chip(
+                          label: Text(
+                            skill,
+                            style: const TextStyle(fontSize: 12),
+                          ),
+                          backgroundColor: const Color(
+                            0xFFFFC107,
+                          ).withValues(alpha: 0.2),
+                          side: BorderSide.none,
+                        ),
+                      )
+                      .toList(),
+                ),
               ],
             ),
           ),
@@ -236,10 +265,12 @@ class _PortfolioPageState extends State<PortfolioPage> {
             // ============================================================================
             // [DESAFIO EXTRA - Fase 1.4] Sombras e Elevação (elevation)
             // ============================================================================
-            elevation: 12, 
+            elevation: 12,
             shadowColor: Colors.black.withValues(alpha: 0.4),
             color: const Color(0xFFF8F9FA),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
             child: Padding(
               padding: const EdgeInsets.all(32.0),
               child: Column(
@@ -250,7 +281,11 @@ class _PortfolioPageState extends State<PortfolioPage> {
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
-                  Container(height: 3, width: 60, color: const Color(0xFFFFC107)),
+                  Container(
+                    height: 3,
+                    width: 60,
+                    color: const Color(0xFFFFC107),
+                  ),
                   const SizedBox(height: 20),
                   const Text(
                     'Unimos o front-end web veloz e responsivo com a excelência dos aplicativos nativos para construir projetos incríveis.\n\nProntos para o próximo desafio!',
@@ -265,10 +300,15 @@ class _PortfolioPageState extends State<PortfolioPage> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF1A1A1A),
                       foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 30,
+                        vertical: 15,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
