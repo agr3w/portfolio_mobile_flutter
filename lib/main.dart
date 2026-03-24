@@ -48,7 +48,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
   bool _isPauloVisible = true;
 
   @override
-  void initState() {
+  void initState() { // estado de inicialização da tela
     super.initState();
     // Ouvinte que detecta a rolagem para mover os botões flutuantes
     _scrollController.addListener(() {
@@ -68,7 +68,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
   }
 
   @override
-  void dispose() {
+  void dispose() { //quando 'destruimos' a tela, limpamos o controlador
     _scrollController.dispose();
     super.dispose();
   }
