@@ -14,7 +14,7 @@ class MeuPortfolioApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
-        // [REQUISITO - Fase 1.3] Cores Hexadecimais Dinâmicas
+        // [REQUISITO] Cores Hexadecimais Dinâmicas
         primaryColor: const Color(0xFFFFC107),
       ),
       home: const PortfolioPage(),
@@ -64,7 +64,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
     final screenHeight = MediaQuery.of(context).size.height - kToolbarHeight;
 
     // ============================================================================
-    // [REQUISITO - Fase 2] O Desafio do Scaffold
+    // [REQUISITO] Scaffold
     // ============================================================================
     return Scaffold(
       backgroundColor: const Color(0xFFE5E5E5),
@@ -94,7 +94,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   bio:
                       'Focado em criar as melhores experiências nativas e híbridas. Transformando ideias complexas em aplicativos móveis de alta performance.',
                   skills: ['Flutter', 'Dart', 'Firebase', 'SQLite'],
-                  // [REQUISITO - Fase 1.1] Imagens da Web via URL
+                  // [REQUISITO] Imagens da Web via URL
                   imageUrl:
                       'https://avatars.githubusercontent.com/u/77137834?v=4',
                   isImageOnRight: true,
@@ -174,7 +174,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          // [REQUISITO - Fase 1.1] CircleAvatar com Imagem da Web
+          // [REQUISITO] CircleAvatar com Imagem da Web
           Positioned(
             right: isImageOnRight ? -60 : null,
             left: isImageOnRight ? null : -60,
@@ -264,7 +264,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Card(
             // ============================================================================
-            // [DESAFIO EXTRA - Fase 1.4] Sombras e Elevação (elevation)
+            // Sombras e Elevação (elevation)
             // ============================================================================
             elevation: 12,
             shadowColor: Colors.black.withValues(alpha: 0.4),
