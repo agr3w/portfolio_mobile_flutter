@@ -113,29 +113,37 @@ class _PortfolioPageState extends State<PortfolioPage> {
               ],
             ),
           ),
-          AnimatedPositionedDirectional(
-            duration: const Duration(milliseconds: 260),
-            curve: Curves.easeInOut,
+          Positioned(
+            left: 0,
+            right: 0,
             bottom: 24,
-            start: _isPauloVisible ? null : 24,
-            end: _isPauloVisible ? 24 : null,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                FloatingActionButton(
-                  heroTag: 'github_btn',
-                  onPressed: () {},
-                  backgroundColor: const Color(0xFF1A1A1A),
-                  child: const Icon(Icons.code, color: Colors.white),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: AnimatedAlign(
+                duration: const Duration(milliseconds: 260),
+                curve: Curves.easeInOut,
+                alignment: _isPauloVisible
+                    ? Alignment.bottomRight
+                    : Alignment.bottomLeft,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    FloatingActionButton(
+                      heroTag: 'github_btn',
+                      onPressed: () {},
+                      backgroundColor: const Color(0xFF1A1A1A),
+                      child: const Icon(Icons.code, color: Colors.white),
+                    ),
+                    const SizedBox(height: 16),
+                    FloatingActionButton(
+                      heroTag: 'linkedin_btn',
+                      onPressed: () {},
+                      backgroundColor: const Color(0xFF0077B5),
+                      child: const Icon(Icons.business, color: Colors.white),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 16),
-                FloatingActionButton(
-                  heroTag: 'linkedin_btn',
-                  onPressed: () {},
-                  backgroundColor: const Color(0xFF0077B5),
-                  child: const Icon(Icons.business, color: Colors.white),
-                ),
-              ],
+              ),
             ),
           ),
         ],
